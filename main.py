@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     dead_zone = DeadZone()
     main_zone = MainZone()
-    spawn_zone = SpawnZone
+    spawn_zone = SpawnZone()
 
     running = True
     while running:
