@@ -11,7 +11,12 @@ class MainZone:
 
 
 class DeadZone:
-    pass
+    def __init__(self):
+        self.dead_zone_hitbox = pygame.rect.Rect(0, 200, 100, 600)
+        self.dead_zone_color = pygame.color.Color((255, 0, 0))
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.dead_zone_color, self.dead_zone_hitbox, width=2)
 
 
 class SpawnZone:
