@@ -8,6 +8,7 @@ if __name__ == '__main__':
 
     dead_zone = DeadZone()
     main_zone = MainZone()
+    spawn_zone = SpawnZone
 
     running = True
     while running:
@@ -18,6 +19,6 @@ if __name__ == '__main__':
         # Отрисовка объектов
         dead_zone.draw(screen)
         main_zone.draw(screen)
-
+        spawn_zone.draw(screen)
         # Обновление экрана
         pygame.display.flip()

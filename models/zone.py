@@ -20,4 +20,9 @@ class DeadZone:
 
 
 class SpawnZone:
-    pass
+    def __init__(self):
+        self.spawn_zone_hitbox = pygame.rect.Rect(900, 200, 100, 600)
+        self.spawn_zone_color = pygame.color.Color((153, 0, 153))
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, self.spawn_zone_color, self.spawn_zone_hitbox, width=2)
