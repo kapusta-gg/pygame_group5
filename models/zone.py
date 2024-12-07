@@ -7,14 +7,14 @@ class MainZone:
         self.main_zone_color = pygame.color.Color((0, 255, 0))
 
         #Создание текста
-        self.font = pygame.font.Font(None, 25)
+        self.font = pygame.font.Font("fonts/raimei-hakke.regular.otf", 25)
         self.text = self.font.render("Основное поле", True, (0, 255, 0))
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.main_zone_color, self.main_zone_hitbox, width=2)
 
         #Отображение текста
-        screen.blit(self.text, (500, 500))
+        screen.blit(self.text, (500, 400))
 
 
 class DeadZone:
