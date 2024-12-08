@@ -1,6 +1,7 @@
 from models.zone import *
 from models.interface import *
-
+from models.entities.plants import *
+from models.entities.zombies import *
 
 if __name__ == '__main__':
     pygame.init()
@@ -13,6 +14,10 @@ if __name__ == '__main__':
 
     hud = MainHUD()
 
+    #Тестовые
+    plant = Plant(100, 200)
+    zombie = Zombie(900 ,200)
+
     running = True
     while running:
         # Просматриваем все события
@@ -20,10 +25,13 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 running = False
         # Отрисовка объектов
-        screen.fill((153, 255, 153))
+        screen.fill((0, 0, 0))
         dead_zone.draw(screen)
         main_zone.draw(screen)
         spawn_zone.draw(screen)
         hud.draw(screen)
+
+        plant.draw(screen)
+        zombie.draw(screen)
         # Обновление экрана
         pygame.display.flip()
