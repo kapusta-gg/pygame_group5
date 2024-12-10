@@ -1,3 +1,5 @@
+import pygame.time
+
 from models.zone import *
 from models.interface import *
 from models.entities.plants import *
@@ -16,7 +18,9 @@ if __name__ == '__main__':
 
     #Тестовые
     plant = Plant(100, 200)
-    zombie = Zombie(900 ,200)
+    zombie = Zombie(900, 200)
+
+    clock = pygame.time.Clock()
 
     running = True
     while running:
@@ -24,7 +28,9 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        tick = clock.tick()
         # Логика
+        zombie.move(10, tick)
         # Отрисовка объектов
         screen.fill((0, 0, 0))
         dead_zone.draw(screen)
