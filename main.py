@@ -23,22 +23,25 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     running = True
+    isShowHitbox = True
     while running:
         # Просматриваем все события
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYUP:
+                isShowHitbox = not isShowHitbox
         tick = clock.tick()
         # Логика
         zombie.move(10, tick)
         # Отрисовка объектов
         screen.fill((0, 0, 0))
-        dead_zone.draw(screen)
-        main_zone.draw(screen)
-        spawn_zone.draw(screen)
+        if isShowHitbox:
+            dead_zone.draw(screen)
+            main_zone.draw(screen)
+            spawn_zone.draw(screen)
+            plant.draw(screen)
+            zombie.draw(screen)
         hud.draw(screen)
-
-        plant.draw(screen)
-        zombie.draw(screen)
         # Обновление экрана
         pygame.display.flip()
