@@ -9,3 +9,7 @@ class Plant:
     def draw(self, screen: pygame.Surface, is_hitbox=True):
         if is_hitbox:
             pygame.draw.rect(screen, self.plant_color, self.plant_hitbox, width=2)
+
+    def change_pos(self, x: int, y: int):
+        self.plant_hitbox.x = x
+        self.plant_hitbox.y = y
