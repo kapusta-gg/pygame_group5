@@ -12,6 +12,6 @@ class Plant:
         if is_show_hitbox:
             pygame.draw.rect(screen, self.plant_color, self.plant_hitbox, width=2)
 
-    def change_pos(self, x, y):
+    def change_pos(self, x: int, y: int):
         self.plant_hitbox.x = x
         self.plant_hitbox.y = y

@@ -14,7 +14,7 @@ class Zombie:
         if is_show_hitbox:
             pygame.draw.rect(screen, self.zombie_color, self.zombie_hitbox, width=2)
 
-    def move(self, tick):
+    def move(self, tick: float):
         self.x -= (Zombie.SPEED * tick) / 1000
         self.zombie_hitbox.x = self.x
 
