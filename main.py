@@ -48,17 +48,16 @@ if __name__ == '__main__':
                 plant_to_place.change_pos(*(i - 40 for i in event.pos))
         tick = clock.tick()
         # Логика
-        zombie.move(10, tick)
+        zombie.move(tick)
         # Отрисовка объектов
         screen.fill((0, 0, 0))
-        if isShowHitbox:
-            dead_zone.draw(screen)
-            main_zone.draw(screen)
-            spawn_zone.draw(screen)
-            plant.draw(screen)
-            zombie.draw(screen)
+        dead_zone.draw(screen, is_show_hitbox=isShowHitbox)
+        main_zone.draw(screen, is_show_hitbox=isShowHitbox)
+        spawn_zone.draw(screen, is_show_hitbox=isShowHitbox)
+        plant.draw(screen, is_show_hitbox=isShowHitbox)
+        zombie.draw(screen, is_show_hitbox=isShowHitbox)
         hud.draw(screen)
         if plant_to_place is not None:
-            plant_to_place.draw(screen, is_hitbox=isShowHitbox)
+            plant_to_place.draw(screen, is_show_hitbox=isShowHitbox)
         # Обновление экрана
         pygame.display.flip()
