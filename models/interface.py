@@ -1,8 +1,8 @@
 import pygame
+
 from models.entities.plants import *
 
 X, Y = 0, 1
-
 
 class MainHUD:
     FONT_SIZE = 45
@@ -31,12 +31,12 @@ class MainHUD:
         for card in self.cards_list:
             card.draw(screen)
 
-    def check_mouse_pos(self, pos):
+    def check_mouse_pos(self, pos: tuple[int, int]):
         for card in self.cards_list:
-            check_x = card.back.x < pos[X] < card.back.x + card.back.w
-            check_y = card.back.y < pos[Y] < card.back.y + card.back.h
+            check_x = card.back.x < pos[X] < card.back.x + card.back.width
+            check_y = card.back.y < pos[Y] < card.back.y + card.back.height
             if check_x and check_y:
-                return card.plant(*pos)
+                return card.plant(*(i - 40 for i in pos))
 
 
 class PlantCard:

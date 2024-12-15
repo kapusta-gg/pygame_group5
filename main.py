@@ -16,51 +16,49 @@ if __name__ == '__main__':
 
     hud = MainHUD()
 
-    isShowHitbox = True
-    isPlantOnCursor = False
-
-    clock = pygame.time.Clock()
-
-    plant_on_cursor = None
-
     #Тестовые
     plant = Plant(100, 200)
     zombie = Zombie(900, 200)
 
+    plant_to_place = None
+
+    clock = pygame.time.Clock()
+
     running = True
+    isShowHitbox = True
+    isPlantCursor = False
+    isMouseBlock = False
     while running:
-        tick = clock.tick()
         # Просматриваем все события
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_F1:
-                    isShowHitbox = not isShowHitbox
-
+            if event.type == pygame.KEYUP:
+                isShowHitbox = not isShowHitbox
             if event.type == pygame.MOUSEBUTTONDOWN:
-                plant_on_cursor = hud.check_mouse_pos(event.pos)
-                if plant_on_cursor is not None:
-                    isPlantOnCursor = True
+                if isPlantCursor:
+                    plant_to_place = None
+                    isPlantCursor = False
                 else:
-                    isPlantOnCursor = False
+                    plant_to_place = hud.check_mouse_pos(event.pos)
+                    if plant_to_place is not None:
+                        isPlantCursor = True
 
-            if event.type == pygame.MOUSEMOTION and isPlantOnCursor:
-                plant_on_cursor.change_pos(event.pos)
-
+            if event.type == pygame.MOUSEMOTION and isPlantCursor:
+                plant_to_place.change_pos(*(i - 40 for i in event.pos))
+        tick = clock.tick()
         # Логика
-        zombie.move(tick)
+        zombie.move(10, tick)
         # Отрисовка объектов
         screen.fill((0, 0, 0))
-        hud.draw(screen)
         if isShowHitbox:
             dead_zone.draw(screen)
             main_zone.draw(screen)
             spawn_zone.draw(screen)
             plant.draw(screen)
             zombie.draw(screen)
-            if plant_on_cursor is not None:
-                plant_on_cursor.draw(screen)
+        hud.draw(screen)
+        if plant_to_place is not None:
+            plant_to_place.draw(screen, is_hitbox=isShowHitbox)
         # Обновление экрана
         pygame.display.flip()
