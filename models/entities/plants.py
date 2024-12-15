@@ -1,5 +1,7 @@
 import pygame
 
+X, Y = 0, 1
+
 
 class Plant:
     def __init__(self, x: int, y: int):
@@ -8,3 +10,7 @@ class Plant:
 
     def draw(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.plant_color, self.plant_hitbox, width=2)
+
+    def change_pos(self, pos):
+        self.plant_hitbox.x = pos[X]
+        self.plant_hitbox.y = pos[Y]

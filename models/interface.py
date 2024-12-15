@@ -1,4 +1,7 @@
 import pygame
+from models.entities.plants import *
+
+X, Y = 0, 1
 
 
 class MainHUD:
@@ -28,6 +31,13 @@ class MainHUD:
         for card in self.cards_list:
             card.draw(screen)
 
+    def check_mouse_pos(self, pos):
+        for card in self.cards_list:
+            check_x = card.back.x < pos[X] < card.back.x + card.back.w
+            check_y = card.back.y < pos[Y] < card.back.y + card.back.h
+            if check_x and check_y:
+                return card.plant(*pos)
+
 
 class PlantCard:
     FONT_SIZE = 30
@@ -37,6 +47,7 @@ class PlantCard:
         self.back_color = pygame.color.Color(255, 229, 204)
         self.cash_font = pygame.font.Font(None, PlantCard.FONT_SIZE)
         self.cash_text = self.cash_font.render("10", True, (0, 0, 0))
+        self.plant = Plant
 
     def draw(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.back_color, self.back, border_radius=5)
