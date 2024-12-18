@@ -20,6 +20,9 @@ class MainHUD:
         self.cards_color = pygame.color.Color(255, 204, 153)
         self.cards_list = [PlantCard(135 + 127 * i, 35) for i in range(6)]
 
+        self.delete = pygame.rect.Rect(900, 25, 100, 50)
+        self.delete_color = pygame.Color(153, 76, 0)
+
     def draw(self, screen: pygame.Surface):
         pygame.draw.rect(screen, self.back_color, self.back,
                          border_bottom_left_radius=10, border_bottom_right_radius=10)
@@ -28,10 +31,16 @@ class MainHUD:
         screen.blit(self.cash_text, (self.cash.x, self.cash.y))
 
         pygame.draw.rect(screen, self.cards_color, self.cards, border_radius=10)
+        pygame.draw.rect(screen, self.delete_color, self.delete, border_radius=5)
         for card in self.cards_list:
             card.draw(screen)
 
     def check_mouse_pos(self, pos: tuple[int, int]):
+        check_x = 900 <= pos[X] <= 1000
+        check_y = 25 <= pos[Y] <= 75
+        if check_x and check_y:
+            return 1
+
         for card in self.cards_list:
             check_x = card.back.x < pos[X] < card.back.x + card.back.width
             check_y = card.back.y < pos[Y] < card.back.y + card.back.height

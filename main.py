@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     #Тестовые
     plant = Plant(100, 200)
-    zombie = Zombie(900, 200)
+    zombies = []
 
     plant_to_place = None
 
@@ -27,6 +27,7 @@ if __name__ == '__main__':
     running = True
     isShowHitbox = True
     isPlantCursor = False
+    isDeleteCursor = False
     isMouseBlock = False
     while running:
         # Просматриваем все события
@@ -36,26 +37,37 @@ if __name__ == '__main__':
             if event.type == pygame.KEYUP:
                 isShowHitbox = not isShowHitbox
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if isPlantCursor:
+                if isDeleteCursor:
+                    main_zone.check_pos_delete(event.pos)
+                    isDeleteCursor = False
+                elif isPlantCursor:
+                    main_zone.check_pos_plant(event.pos, plant_to_place)
                     plant_to_place = None
                     isPlantCursor = False
                 else:
-                    plant_to_place = hud.check_mouse_pos(event.pos)
-                    if plant_to_place is not None:
+                    on_cursor = hud.check_mouse_pos(event.pos)
+                    if on_cursor is None:
+                        pass
+                    elif on_cursor == 1:
+                        isDeleteCursor = True
+                    else:
+                        plant_to_place = on_cursor
                         isPlantCursor = True
 
             if event.type == pygame.MOUSEMOTION and isPlantCursor:
                 plant_to_place.change_pos(*(i - 40 for i in event.pos))
         tick = clock.tick()
         # Логика
-        zombie.move(tick)
+        new_zombie = spawn_zone.spawn()
+        if new_zombie is not None:
+            zombies.append(new_zombie)
+        [zombie.move(tick) for zombie in zombies]
         # Отрисовка объектов
         screen.fill((0, 0, 0))
         dead_zone.draw(screen, is_show_hitbox=isShowHitbox)
         main_zone.draw(screen, is_show_hitbox=isShowHitbox)
         spawn_zone.draw(screen, is_show_hitbox=isShowHitbox)
-        plant.draw(screen, is_show_hitbox=isShowHitbox)
-        zombie.draw(screen, is_show_hitbox=isShowHitbox)
+        [zombie.draw(screen, is_show_hitbox=isShowHitbox) for zombie in zombies]
         hud.draw(screen)
         if plant_to_place is not None:
             plant_to_place.draw(screen, is_show_hitbox=isShowHitbox)
