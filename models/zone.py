@@ -1,4 +1,3 @@
-import pprint
 from models.entities.plants import *
 from models.entities.zombies import *
 import pygame
