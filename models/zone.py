@@ -25,11 +25,12 @@ class MainZone:
         MainZone.group.draw(screen)
         if is_show_hitbox:
             pygame.draw.rect(screen, self.main_zone_color, self.main_zone_hitbox, width=2)
-            for i in range(8):
-                for j in range(6):
-                    if self.board[j][i] is not None:
+        for i in range(8):
+            for j in range(6):
+                if self.board[j][i] is not None:
                         self.board[j][i].draw(screen, is_show_hitbox=is_show_hitbox)
-                    else:
+                else:
+                    if is_show_hitbox:
                         rect = pygame.rect.Rect(100 + i * 100, 200 + j * 100, 100, 100)
                         pygame.draw.rect(screen, self.main_zone_color, rect, width=2)
 
@@ -37,7 +38,7 @@ class MainZone:
         x = (pos[0] - 100) // 100
         y = (pos[1] - 200) // 100
         ch_x = 0 <= x < 8
-        ch_y = 0 <= x < 6
+        ch_y = 0 <= y < 6
         if ch_x and ch_y:
             plant.plant_hitbox.x = 100 + x * 100
             plant.plant_hitbox.y = 200 + y * 100
