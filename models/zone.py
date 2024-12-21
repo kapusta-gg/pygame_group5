@@ -75,7 +75,7 @@ class SpawnZone:
 
     def spawn(self):
         self.counter += 1
-        if self.counter >= 10000:
+        if self.counter >= 5000:
             line = random.randint(0, 6)
             self.counter = 0
             return Zombie(900, 200 + line * 100)

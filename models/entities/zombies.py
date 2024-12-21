@@ -1,8 +1,10 @@
 import pygame
+from methods import load_image
 
 
 class Zombie:
     SPEED = 10
+    image = "images/zombie.png"
 
     def __init__(self, x: int, y: int):
         self.x = x
@@ -11,7 +13,14 @@ class Zombie:
         self.zombie_color = pygame.color.Color((51, 0, 102))
         self.main_zone_line = None
 
+        sprite = pygame.sprite.Sprite()
+        sprite.image = pygame.transform.scale(load_image(Zombie.image), (100, 100))
+        sprite.rect = self.zombie_hitbox
+        self._ = pygame.sprite.GroupSingle()
+        self._.add(sprite)
+
     def draw(self, screen: pygame.Surface, is_show_hitbox=True):
+        self._.draw(screen)
         if is_show_hitbox:
             pygame.draw.rect(screen, self.zombie_color, self.zombie_hitbox, width=2)
 
