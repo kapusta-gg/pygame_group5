@@ -1,16 +1,28 @@
 from models.entities.plants import *
 from models.entities.zombies import *
+from methods import load_image
+
 import pygame
 import random
 
 
 class MainZone:
+    image = "images/grass.png"
+    group = pygame.sprite.Group()
+
     def __init__(self):
         self.main_zone_hitbox = pygame.rect.Rect(100, 200, 800, 600)
         self.main_zone_color = pygame.color.Color((0, 255, 0))
         self.board = [[None] * 8 for _ in range(6)]
+        for i in range(8):
+            for j in range(6):
+                sprite = pygame.sprite.Sprite()
+                sprite.image = load_image(MainZone.image)
+                sprite.rect = pygame.Rect(100 + i * 100, 200 + j * 100, 100, 100)
+                MainZone.group.add(sprite)
 
     def draw(self, screen: pygame.Surface, is_show_hitbox=True):
+        MainZone.group.draw(screen)
         if is_show_hitbox:
             pygame.draw.rect(screen, self.main_zone_color, self.main_zone_hitbox, width=2)
             for i in range(8):
