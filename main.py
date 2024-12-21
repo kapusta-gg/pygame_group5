@@ -4,6 +4,7 @@ from models.zone import *
 from models.interface import *
 from models.entities.plants import *
 from models.entities.zombies import *
+from models.cursor import Cursor
 
 if __name__ == '__main__':
     pygame.init()
@@ -16,8 +17,10 @@ if __name__ == '__main__':
 
     hud = MainHUD()
 
+    cursor = Cursor()
+    pygame.mouse.set_visible(False)
+
     #Тестовые
-    plant = Plant(100, 200)
     zombies = []
 
     plant_to_place = None
@@ -29,6 +32,7 @@ if __name__ == '__main__':
     isPlantCursor = False
     isDeleteCursor = False
     isMouseBlock = False
+
     while running:
         # Просматриваем все события
         for event in pygame.event.get():
@@ -56,6 +60,8 @@ if __name__ == '__main__':
 
             if event.type == pygame.MOUSEMOTION and isPlantCursor:
                 plant_to_place.change_pos(*(i - 40 for i in event.pos))
+            if event.type == pygame.MOUSEMOTION:
+                cursor.move(*event.pos)
         tick = clock.tick()
         # Логика
         new_zombie = spawn_zone.spawn()
@@ -63,12 +69,13 @@ if __name__ == '__main__':
             zombies.append(new_zombie)
         [zombie.move(tick) for zombie in zombies]
         # Отрисовка объектов
-        screen.fill((0, 0, 0))
+        screen.fill((100, 100, 100))
         dead_zone.draw(screen, is_show_hitbox=isShowHitbox)
         main_zone.draw(screen, is_show_hitbox=isShowHitbox)
         spawn_zone.draw(screen, is_show_hitbox=isShowHitbox)
         [zombie.draw(screen, is_show_hitbox=isShowHitbox) for zombie in zombies]
         hud.draw(screen)
+        cursor.draw(screen)
         if plant_to_place is not None:
             plant_to_place.draw(screen, is_show_hitbox=isShowHitbox)
         # Обновление экрана
