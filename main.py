@@ -68,13 +68,15 @@ if __name__ == '__main__':
         if new_zombie is not None:
             zombies.append(new_zombie)
         bullets_group.update()
+        print(len(zombies))
+        zombies = [i for i in zombies if i.hp > 0]
         [zombie.move(tick) for zombie in zombies]
         # Отрисовка объектов
         screen.fill((100, 100, 100))
         dead_zone.draw(screen, is_show_hitbox=isShowHitbox)
         main_zone.draw(screen, is_show_hitbox=isShowHitbox)
         spawn_zone.draw(screen, is_show_hitbox=isShowHitbox)
-        [zombie.draw(screen, is_show_hitbox=isShowHitbox) for zombie in zombies]
+        [zombie.draw(screen, bullets_group, is_show_hitbox=isShowHitbox) for zombie in zombies]
         bullets_group.draw(screen)
         hud.draw(screen)
         cursor.draw(screen)
