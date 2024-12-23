@@ -29,6 +29,7 @@ class MainZone:
             for j in range(6):
                 if self.board[j][i] is not None:
                         self.board[j][i].draw(screen, is_show_hitbox=is_show_hitbox)
+                        self.board[j][i].shoot()
                 else:
                     if is_show_hitbox:
                         rect = pygame.rect.Rect(100 + i * 100, 200 + j * 100, 100, 100)
@@ -75,7 +76,7 @@ class SpawnZone:
 
     def spawn(self):
         self.counter += 1
-        if self.counter >= 5000:
+        if self.counter >= 1000:
             line = random.randint(0, 6)
             self.counter = 0
             return Zombie(900, 200 + line * 100)
