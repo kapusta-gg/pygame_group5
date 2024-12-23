@@ -1,5 +1,6 @@
 import pygame
 from methods import load_image
+from models.entities.plants import Bullet
 
 
 class Zombie:

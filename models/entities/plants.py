@@ -2,7 +2,7 @@ import pygame
 from methods import load_image
 
 X, Y = 0, 1
-
+bullets_group = pygame.sprite.Group()
 
 class Plant:
     image = "images/plant.png"
@@ -16,13 +16,11 @@ class Plant:
         sprite.rect = self.plant_hitbox
         self._ = pygame.sprite.GroupSingle()
         self._.add(sprite)
-        self.bullets_group = pygame.sprite.Group()
 
         self.counter = 0
 
     def draw(self, screen: pygame.Surface, is_show_hitbox=True):
         self._.draw(screen)
-        self.bullets_group.draw(screen)
         if is_show_hitbox:
             pygame.draw.rect(screen, self.plant_color, self.plant_hitbox, width=2)
 
@@ -33,9 +31,8 @@ class Plant:
     def shoot(self):
         self.counter += 1
         if self.counter >= 100:
-            self.bullets_group.add(Bullet(self.plant_hitbox.x, self.plant_hitbox.y))
+            bullets_group.add(Bullet(self.plant_hitbox.x, self.plant_hitbox.y))
             self.counter = 0
-        self.bullets_group.update()
 
 
 class Bullet(pygame.sprite.Sprite):

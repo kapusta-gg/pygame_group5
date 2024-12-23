@@ -67,6 +67,7 @@ if __name__ == '__main__':
         new_zombie = spawn_zone.spawn()
         if new_zombie is not None:
             zombies.append(new_zombie)
+        bullets_group.update()
         [zombie.move(tick) for zombie in zombies]
         # Отрисовка объектов
         screen.fill((100, 100, 100))
@@ -74,6 +75,7 @@ if __name__ == '__main__':
         main_zone.draw(screen, is_show_hitbox=isShowHitbox)
         spawn_zone.draw(screen, is_show_hitbox=isShowHitbox)
         [zombie.draw(screen, is_show_hitbox=isShowHitbox) for zombie in zombies]
+        bullets_group.draw(screen)
         hud.draw(screen)
         cursor.draw(screen)
         if plant_to_place is not None:
